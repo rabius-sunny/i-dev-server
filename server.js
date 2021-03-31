@@ -37,7 +37,7 @@ client.connect(err => {
     // Get an item by id
     app.post('/bookById', (req, res) => {
         const bookId = req.body
-        booksCollection.find({ "_id": ObjectId(bookId) })
+        booksCollection.find({ _id: ObjectId(bookId) })
             .toArray((err, book) => {
                 res.send(book)
             })
