@@ -24,7 +24,9 @@ client.connect(err => {
     console.log('connection err: ', err)
     console.log('database connected')
     const booksCollection = client.db("booksdb").collection("books");
+    // API call for different operations
 
+    // Get all items
     app.get('/books', (req, res) => {
         booksCollection.find()
             .toArray((err, book) => {
@@ -32,6 +34,16 @@ client.connect(err => {
             })
     })
 
+    // Get an item by id
+    app.post('/bookById', (req, res) => {
+        const bookId = req.body
+        booksCollection.find({ key: { $in: bookId } })
+            .toArray((err, book) => {
+                res.send(book)
+            })
+    })
+
+    // Adding an item
     app.post('/addBook', (req, res) => {
         const newBook = req.body;
         booksCollection.insertOne(newBook)
@@ -39,6 +51,7 @@ client.connect(err => {
                 res.send(result.insertedCount)
             })
     })
+
 
 
 });
