@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient;
-// const ObjectID = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
@@ -37,7 +37,7 @@ client.connect(err => {
     // Get an item by id
     app.post('/bookById', (req, res) => {
         const bookId = req.body
-        booksCollection.find({ key: { $in: bookId } })
+        booksCollection.find({ "_id": ObjectId(bookId) })
             .toArray((err, book) => {
                 res.send(book)
             })
