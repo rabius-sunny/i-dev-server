@@ -50,14 +50,15 @@ client.connect(err => {
         const newBook = req.body;
         booksCollection.insertOne(newBook)
             .then(result => res.send(result.insertedCount))
+    })
 
-        // Adding Order Info to Database
-        app.post('/addOrder', (req, res) => {
-            const order = req.body
-            orderInfo.insertOne(order)
-                .then(result => res.send(result.insertedCount))
-        })
+    // Adding Order Info to Database
+    app.post('/addOrder', (req, res) => {
+        const order = req.body
+        orderInfo.insertOne(order)
+            .then(result => res.send(result.insertedCount))
     })
 })
+
 
 app.listen(port, () => console.log('server is listening'))
