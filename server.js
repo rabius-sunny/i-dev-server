@@ -45,6 +45,12 @@ client.connect(err => {
             })
     })
 
+    // Get orders for specific user
+    app.get('/orders', (req, res) => {
+        orderInfo.find({email: req.query.email})
+        .toArray((err, orders) => res.send(orders))            
+        })
+
     // Adding an item
     app.post('/addBook', (req, res) => {
         const newBook = req.body;
