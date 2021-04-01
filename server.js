@@ -47,15 +47,21 @@ client.connect(err => {
 
     // Get orders for specific user
     app.get('/orders', (req, res) => {
-        orderInfo.find({email: req.query.email})
-        .toArray((err, orders) => res.send(orders))            
-        })
+        orderInfo.find({ email: req.query.email })
+            .toArray((err, orders) => res.send(orders))
+    })
 
     // Adding an item
     app.post('/addBook', (req, res) => {
         const newBook = req.body;
         booksCollection.insertOne(newBook)
             .then(result => res.send(result.insertedCount))
+    })
+
+    // Deleting an item
+    app.delete('/delete/:id', (req, res) => {
+        booksCollection.deleteOne({ _id: req.params.id })
+            .then((err, result) => res.send(result.deletedCount))
     })
 
     // Adding Order Info to Database
