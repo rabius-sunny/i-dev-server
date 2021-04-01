@@ -24,6 +24,8 @@ client.connect(err => {
     console.log('connection err: ', err)
     console.log('database connected')
     const booksCollection = client.db("booksdb").collection("books");
+    const orderInfo = client.db("booksdb").collection("orders");
+
     // API call for different operations
 
     // Get all items
@@ -47,13 +49,15 @@ client.connect(err => {
     app.post('/addBook', (req, res) => {
         const newBook = req.body;
         booksCollection.insertOne(newBook)
-            .then(result => {
-                res.send(result.insertedCount)
-            })
+            .then(result => res.send(result.insertedCount))
+
+        // Adding Order Info to Database
+        app.post('/addOrder', (req, res) => {
+            const order = req.body
+            orderInfo.insertOne(order)
+                .then(result => res.send(result.insertedCount))
+        })
     })
-
-
-
-});
+})
 
 app.listen(port, () => console.log('server is listening'))
