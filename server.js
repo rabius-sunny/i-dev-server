@@ -60,7 +60,7 @@ client.connect(err => {
 
     // Deleting an item
     app.delete('/delete/:id', (req, res) => {
-        booksCollection.deleteOne({ _id: req.params.id })
+        booksCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then((err, result) => res.send(result.deletedCount))
     })
 
